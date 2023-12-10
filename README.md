@@ -121,9 +121,7 @@ class MyCalendar:
         
 
 
-## Your MyCalendar object will be instantiated and called as such:
-##  obj = MyCalendar()
-##  param_1 = obj.book(start,end)
+
 
 
 # My calendar 2  here we dont have to do triple booking
@@ -151,9 +149,6 @@ class MyCalendarTwo:
         
 
 
-# Your MyCalendarTwo object will be instantiated and called as such:
-# obj = MyCalendarTwo()
-# param_1 = obj.book(start,end)
 
 ## My calender 3 
 
@@ -180,9 +175,90 @@ class MyCalendarThree:
         
 
 
-## Your MyCalendarThree object will be instantiated and called as such:
-## obj = MyCalendarThree()
-## param_1 = obj.book(startTime,endTime)
+
+# Implementation  of Trie
+
+
+class Node:
+    def __init__(self):
+        self.links=[None]*26 #an array of 26 charcaters
+        self.flag=False
+
+    def containsKey(self,ch):
+        return self.links[ord(ch)-ord("a")]!=None
+    
+    def put(self,ch,node):
+        self.links[ord(ch)-ord("a")]=node
+    def get(self,ch):
+        return self.links[ord(ch)-ord("a")]
+    
+    def setEnd(self):
+        self.flag=True
+    
+    def isEnd(self):
+        return self.flag
+class Trie:
+
+    def __init__(self):
+        self.root=Node()
+        
+    def insert(self, word: str) -> None:
+        node=self.root
+        #we need to insert the characters in a trie
+        for i in range(0,len(word)):
+            if not (node.containsKey(word[i])):
+                node.put(word[i],Node())
+            #now the next step is to move to the reference node
+            node=node.get(word[i])
+        node.setEnd() #as the word ends the flag is set to true
+        
+
+    def search(self, word: str) -> bool:
+        node=self.root
+        #traverse through the given word
+        for i in range(0,len(word)):
+            if(not node.containsKey(word[i])):
+                return False
+            node=node.get(word[i])
+        return node.isEnd()
+
+        
+
+    def startsWith(self, prefix: str) -> bool:
+        #here we need to find if the word starts with the prefix or not
+        node=self.root
+        for i in range(0,len(prefix)):
+            if(not node.containsKey(prefix[i])):
+                return False
+            #move to the reference
+            node=node.get(prefix[i])
+        return True
+
+# Implementation of DSU
+
+class DisjointSet:
+    def __init__(self,n):
+        self.parent=[i for i in range(n+1)]
+        self.rank=[0 for i in range(n+1)]
+
+    def findparent(self,node):
+        if(node==self.parent[node]):
+            return node
+        self.parent[node]=self.findparent(self.parent[node])
+        return self.parent[node]
+
+    def unionbyrank(self,u,v):
+        upu=self.findparent(u)
+        upv=self.findparent(v)
+        if(self.rank[upu]<self.rank[upv]):
+            self.parent[upu]=upv
+        elif(self.rank[upv]<self.rank[upu]):
+            self.parent[upv]=upu
+        else:
+            self.rank[upu]+=1
+            self.parent[upv]=upu
+        
+
 
 
         
