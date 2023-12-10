@@ -237,6 +237,7 @@ class Trie:
 # Implementation of DSU
 
 class DisjointSet:
+
     def __init__(self,n):
         self.parent=[i for i in range(n+1)]
         self.rank=[0 for i in range(n+1)]
