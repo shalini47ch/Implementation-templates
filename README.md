@@ -303,6 +303,51 @@ class Solution:
             0+self.helper(ind+1,0,prices,n,dp))
         dp[ind][buy]=profit
         return dp[ind][buy]
+
+
+## Morris Traversal helps us to perform tree traversal in O(1) space and it is the most optimized way to perform tree traversals
+
+# Inorder Traversal through Morris Traversal
+
+
+
+class Solution:
+
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+    
+        #most optimized approach is by using morris traversal where the time complexity will be O(N) but space will be O(1)
+        curr=root
+        ans=[]
+        #keep iterating until the curr!=None
+        while(curr!=None):
+            leftNode=curr.left
+            if(leftNode==None):
+                #matlab right mei move karna hai
+                ans.append(curr.val)
+                curr=curr.right
+            else:
+                #toh isme se uska rightmost node nikalo
+                rightmostNode=self.findright(leftNode,curr)
+                if(rightmostNode.right==None):
+                    #matlab thread nai hai to thread banao
+                    rightmostNode.right=curr
+                    curr=curr.left
+                else:
+                    #means thread already exists so we need to break that thread
+                    rightmostNode.right=None
+                    ans.append(curr.val)
+                    curr=curr.right
+        return ans
+
+    #now creating a helper function to find the rightmost most
+    def findright(self,leftNode,curr):
+        while(leftNode.right!=None and leftNode.right!=curr):
+            #matlab leftNode.right exists and it is not equal to the curr node
+            #move the leftNode to the right
+            leftNode=leftNode.right
+        return leftNode
+
+
         
         
 
