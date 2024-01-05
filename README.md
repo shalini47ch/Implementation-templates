@@ -348,6 +348,64 @@ class Solution:
         return leftNode
 
 
+# Preorder traversal using Morris Traversal
+
+
+class Solution:
+
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        #the optimized approach is by using morris traversal
+        #preorder is root->left->right
+        ans=[]
+        curr=root
+        while(curr!=None):
+            leftNode=curr.left
+            if(leftNode==None):
+                ans.append(curr.val)
+                curr=curr.right
+            else:
+                rightmostnode=self.findright(leftNode,curr)
+                if(rightmostnode.right==None):
+                    #means we need to create a thread
+                    ans.append(curr.val)
+                    rightmostnode.right=curr
+                    curr=curr.left
+                else:
+                    #here break the thread
+                    rightmostnode.right=None
+                    curr=curr.right
+        return ans
+
+    def findright(self,leftNode,curr):
+        while(leftNode.right!=None and leftNode.right!=curr):
+            leftNode=leftNode.right
+        return leftNode
+            
+
+
+
+
+
+
+    #     #root->left->right
+    #     ans=[]
+    #     self.helper(root,ans)
+    #     return ans
+
+
+
+
+
+    # def helper(self,root,ans):
+    #     if root is None:
+    #         return ans
+    #     ans.append(root.val)
+    #     self.helper(root.left,ans)
+    #     self.helper(root.right,ans)
+    #     return ans
+        
+
+
         
         
 
