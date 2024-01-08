@@ -466,6 +466,37 @@ class Solution:
                     node=node.right
             ans.extend(temp)
         return ans
+
+
+
+# Diagonal Traversal of a Binary Tree(Anticlockwise)
+
+from collections import deque
+
+class Solution:
+
+    def diagonal(self,root):
+        #:param root: root of the given tree.
+        #return: print out the diagonal traversal,  no need to print new line
+        #code here
+        #we will solve it using bfs logic 
+        queue=deque()
+        queue.append(root)
+        ans=[] #this will store the diagonal traversal
+        #keep iterating until the queue is empty
+        while(queue):
+            n=len(queue)
+            temp=[]
+            for i in range(0,n):
+                node=queue.popleft()
+                while(node!=None):
+                    temp.append(node.data)
+                    if(node.right!=None):
+                        #matlab abhi left wala hai to usse queue mei daaldo
+                        queue.append(node.right)
+                    node=node.left
+            ans.extend(temp)
+        return ans
         
         
 
