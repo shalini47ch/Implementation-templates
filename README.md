@@ -403,6 +403,70 @@ class Solution:
     #     self.helper(root.left,ans)
     #     self.helper(root.right,ans)
     #     return ans
+
+
+
+
+# Diagonal Traversal of a Binary Tree(Clockwise)
+
+Given a Binary Tree, print the diagonal traversal of the binary tree.
+
+Consider lines of slope -1 passing between nodes. Given a Binary Tree, print all diagonal elements in a binary tree belonging to same line.
+If the diagonal element are present in two different subtress then left subtree diagonal element should be taken first and then right subtree. 
+
+Example 1:
+
+Input :
+            8
+         /     \
+        3      10
+      /   \      \
+     1     6     14
+         /   \   /
+        4     7 13
+Output : 8 10 14 3 6 7 13 1 4
+
+
+'''
+# Node Class:
+
+class Node:
+
+    def _init_(self,val):
+        self.data = val
+        self.left = None
+        self.right = None
+'''
+#Complete the function below
+
+from collections import deque
+
+class Solution:
+
+    def diagonal(self,root):
+    
+        #:param root: root of the given tree.
+        #return: print out the diagonal traversal,  no need to print new line
+        #code here
+        #we will solve it using bfs logic 
+        queue=deque()
+        queue.append(root)
+        ans=[] #this will store the diagonal traversal
+        #keep iterating until the queue is empty
+        while(queue):
+            n=len(queue)
+            temp=[]
+            for i in range(0,n):
+                node=queue.popleft()
+                while(node!=None):
+                    temp.append(node.data)
+                    if(node.left!=None):
+                        #matlab abhi left wala hai to usse queue mei daaldo
+                        queue.append(node.left)
+                    node=node.right
+            ans.extend(temp)
+        return ans
+        
         
 
 
