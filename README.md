@@ -497,6 +497,63 @@ class Solution:
                     node=node.left
             ans.extend(temp)
         return ans
+
+
+
+#  Redundant Connection 1 And 2 it is based on Union Find Logic
+
+
+In this problem, a tree is an undirected graph that is connected and has no cycles.
+
+You are given a graph that started as a tree with n nodes labeled from 1 to n, with one additional edge added. The added edge has two different vertices chosen from 1 to n, and was not an edge that already existed. The graph is represented as an array edges of length n where edges[i] = [ai, bi] indicates that there is an edge between nodes ai and bi in the graph.
+
+Return an edge that can be removed so that the resulting graph is a tree of n nodes. If there are multiple answers, return the answer that occurs last in the input.
+
+
+
+
+class DisjointSet:
+
+    def __init__(self,n):
+        self.parent=[i for i in range(n+1)]
+        self.rank=[0 for i in range(n+1)]
+    #now the next step is to find the parent of the node
+    def findparent(self,node):
+        if(node==self.parent[node]):
+            return node
+        self.parent[node]=self.findparent(self.parent[node])
+        return self.parent[node]
+    #now the next one is to find the union by rank
+    def unionbyrank(self,u,v):
+        #find the ultimate parent of u and v
+        upu=self.findparent(u)
+        upv=self.findparent(v)
+        if(self.rank[upu]<self.rank[upv]):
+            self.parent[upu]=upv
+        elif(self.rank[upv]<self.rank[upu]):
+            self.parent[upv]=upu
+        else:
+            self.parent[upv]=upu
+            self.rank[upu]+=1
+
+        
+class Solution:
+
+    def findRedundantConnection(self, edges: List[List[int]]) -> List[int]:
+        #here we will use the logic of disjointSet union and the nodes which have the same parent can be removed
+        ans=[]
+        n=len(edges)
+        ds=DisjointSet(n)
+        for u,v in edges:
+            if(ds.findparent(u)==ds.findparent(v)):
+                ans.extend([u,v])
+            ds.unionbyrank(u,v)
+        if(len(ans)==0):
+            ans.extend([-1,-1])
+        return ans
+
+
+        
         
         
 
