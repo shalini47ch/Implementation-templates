@@ -553,6 +553,34 @@ class Solution:
         return ans
 
 
+
+## Catalan Numbers 
+
+
+
+C0=1
+
+C1=1
+
+C2=C0C1+C1C0
+
+C3=C0C2+C1C1+C2C0
+
+
+C4=C0C3+C1C2+C2C1+C3C0  #these are the formulas for catalan number
+
+
+class Solution:
+
+  def nthcatalan(self,n):
+  
+      #first create a dp array
+      dp=[0 for i in range(n+1)]
+      dp[0]=1
+      dp[1]=1
+      for i in range(2,len(dp)):
+          dp[i]+=d[j]*dp[i-j-1]
+      return dp[n]
         
         
         
