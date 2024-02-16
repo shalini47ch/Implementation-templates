@@ -581,6 +581,57 @@ class Solution:
       for i in range(2,len(dp)):
           dp[i]+=d[j]*dp[i-j-1]
       return dp[n]
+
+
+## No of digit one (Based onthe concept of digit dp)
+
+Given an integer n, count the total number of digit 1 appearing in all non-negative integers less than or equal to n.
+
+ 
+
+Example 1:
+
+Input: n = 13
+Output: 6
+Example 2:
+
+Input: n = 0
+Output: 0
+
+# Digit dp is mainly applied where we are provided with certain ranges and then either we need to count the digits equal to 1 3 so one or some other condtion.There will be repeating subproblems
+
+
+
+class Solution:
+
+    def countDigitOne(self, n: int) -> int:
+    
+        #here we are given the range from 0 till n and we need to return the count of 1s in it this is the problem of digit dp
+        dp=[[[-1 for i in range(12)]for j in range(2)]for k in range(12)]
+        ans=str(n)
+        return self.solve(ans,0,1,0,dp)
+        
+
+    def solve(self,s,ind,flag,count,dp):
+        if(ind==len(s)):
+            return count
+        #if we have already got the answer then return that
+        if(dp[ind][flag][count]!=-1):
+            return dp[ind][flag][count]
+        #flag 1 means restricted and 0 means not restricted
+        if(flag==1):
+            limit=ord(s[ind])-ord("0")
+        else:
+            limit=9
+        #now traverse through the limits
+        ans=0
+        for i in range(0,limit+1):
+            updatecount = count + (1 if i == 1 else 0)
+            ans += self.solve(s,ind+1,flag &(i == ord(s[ind]) - ord("0")), updatecount, dp)
+        dp[ind][flag][count]=ans
+        return dp[ind][flag][count]
+            
+       
         
         
         
