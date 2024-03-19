@@ -630,6 +630,65 @@ class Solution:
             ans += self.solve(s,ind+1,flag &(i == ord(s[ind]) - ord("0")), updatecount, dp)
         dp[ind][flag][count]=ans
         return dp[ind][flag][count]
+
+
+
+## Delete nodes and return forest
+
+Given the root of a binary tree, each node in the tree has a distinct value.
+
+After deleting all nodes with a value in to_delete, we are left with a forest (a disjoint union of trees).
+
+Return the roots of the trees in the remaining forest. You may return the result in any order.
+
+ 
+
+Example 1:
+
+
+Input: root = [1,2,3,4,5,6,7], to_delete = [3,5]
+Output: [[1,2,null,4],[6],[7]]
+Example 2:
+
+Input: root = [1,2,4,null,3], to_delete = [3]
+Output: [[1,2,4]]
+
+
+
+
+class Solution:
+
+    def delNodes(self, root: Optional[TreeNode], to_delete: List[int]) -> List[TreeNode]:
+    
+        #use the logic of dfs to solve this first move to the left part and then move to the right part
+        hset=set()
+        result=[]
+        #put the elements of to_delete in hset
+        for ele in to_delete:
+            hset.add(ele)
+        self.helper(root,hset,result)
+        if(root.val not in hset):
+            result.append(root)
+        return result 
+
+    #now the next step is to create a helper function that will delete
+    def helper(self,root,hset,result):
+        #base case
+        if root is None:
+            return None
+        #now we will first move to the left tree and then to the right tree
+        root.left=self.helper(root.left,hset,result)
+        root.right=self.helper(root.right,hset,result)
+        if(root.val in hset):
+            #so we need to put the left and right node in the result and delete the root.val
+            if(root.left!=None):
+                result.append(root.left)
+            if(root.right!=None):
+                result.append(root.right)
+            return None
+        else:
+            return root
+        
             
        
         
