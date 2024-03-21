@@ -688,6 +688,50 @@ class Solution:
             return None
         else:
             return root
+
+## Trapping rain water
+
+Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it can trap after raining.
+
+ Input: height = [0,1,0,2,1,0,1,3,2,1,2,1]
+Output: 6
+Explanation: The above elevation map (black section) is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped.
+
+
+
+class Solution:
+
+    def trap(self, height: List[int]) -> int:
+        n=len(height)
+        leftgreater=self.greaterleft(height,n)
+        rightgreater=self.greaterright(height,n)
+        width=1
+        su=0 #at last we need to return the sum of the heights
+        for i in range(0,n):
+            h=min(leftgreater[i],rightgreater[i])-height[i]
+            #now after this we need to add the area to the su
+            su+=(width*h)
+        return su
+
+    #now creating two helper functiom to findgreater on left and greater on right
+    def greaterleft(self,height,n):
+        #the first index element doesn't have anyone on left
+        left=[0 for i in range(n)]
+        left[0]=height[0]
+        #now filling the other half 
+        for i in range(1,n):
+            left[i]=max(left[i-1],height[i])
+        return left 
+
+    #now similarly create a helper function to find the maximum on right
+    def greaterright(self,height,n):
+        right=[0 for i in range(n)]
+        right[n-1]=height[n-1] #as there are no elements 
+        for i in range(n-2,-1,-1):
+            right[i]=max(right[i+1],height[i])
+        return right
+    
+        
         
             
        
