@@ -757,6 +757,53 @@ class MyStack:
         x=self.arr[self.top]
         self.top-=1
         return x
+
+## Implement queue using arrays 
+
+Here we will take two pointers called as start and end while pushing we will move the end pointer and while popping we will modify the start pointer and then check according to the currsize and the original size
+
+
+
+class MyQueue:
+    def __init__(self):
+        self.currsize=0
+        self.size=100005
+        self.arr=[-1 for i in range(self.size)]
+        self.start=-1
+        self.end=-1
+        
+        
+    
+    #Function to push an element x in a queue.
+    def push(self, x):
+        if(self.currsize==self.size):
+            #matlabpush nai karsakte hai 
+            return -1
+        if(self.currsize==0):
+            self.start=0
+            self.end=0
+        else:
+            self.end=(self.end+1)%self.size
+        self.arr[self.end]=x
+        self.currsize+=1
+        return 0
+            
+        
+    #Function to pop an element from queue and return that element.
+    def pop(self): 
+        #this helps us to remove theelement from the queue
+        if(self.currsize==0):
+            return -1
+        ele=self.arr[self.start]
+        if(self.currsize==1):
+            self.start=-1
+            self.end=-1
+        else:
+            self.start=(self.start+1)%self.size
+        self.currsize-=1
+        return ele
+            
+        
         
     
         
