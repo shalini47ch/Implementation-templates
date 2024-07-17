@@ -730,6 +730,34 @@ class Solution:
         for i in range(n-2,-1,-1):
             right[i]=max(right[i+1],height[i])
         return right
+
+# Stack Implementation using Arrays 
+
+The intution here is that we will create an array of size as asked in the question and use a top variable with a value assigned and when we need to push the element in the stack we will increment the top by 1 and put the element in stack[top]=x and while popping we reduce the top by top-1
+
+
+
+class MyStack:
+
+    def __init__(self):
+        self.arr=[-1 for i in range(1000)]
+        self.top=-1
+    
+    #Function to push an integer into the stack.
+    def push(self,data):
+        #add code here
+        self.top+=1
+        self.arr[self.top]=data
+    
+    #Function to remove an item from top of the stack.
+    def pop(self):
+        #add code here
+        if(self.top==-1):
+            return -1
+        x=self.arr[self.top]
+        self.top-=1
+        return x
+        
     
         
         
