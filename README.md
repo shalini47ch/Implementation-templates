@@ -802,6 +802,63 @@ class MyQueue:
             self.start=(self.start+1)%self.size
         self.currsize-=1
         return ele
+
+## NGE TO THE RIGHT WITH TWO ARRAYS
+
+The next greater element of some element x in an array is the first greater element that is to the right of x in the same array.
+
+You are given two distinct 0-indexed integer arrays nums1 and nums2, where nums1 is a subset of nums2.
+
+For each 0 <= i < nums1.length, find the index j such that nums1[i] == nums2[j] and determine the next greater element of nums2[j] in nums2. If there is no next greater element, then the answer for this query is -1.
+
+Return an array ans of length nums1.length such that ans[i] is the next greater element as described above.
+
+ 
+
+Example 1:
+
+Input: nums1 = [4,1,2], nums2 = [1,3,4,2]
+Output: [-1,3,-1]
+
+
+
+class Solution:
+
+    def nextGreaterElement(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        #use hmap and stack to solve this 
+        #use the same logic as nearest greater to right 
+        n=len(nums1)
+        m=len(nums2)
+        ngr=[-1 for i in range(m)]
+        stack=[]
+        hmap=defaultdict(int)
+        #traverse in the reverse direction
+        for i in range(m-1,-1,-1):
+            while(len(stack)>0 and stack[-1]<=nums2[i]):
+                #matlab smaller element mila hai toh isko pop karna hai
+                stack.pop()
+            #yahan wo case hai jahan greater mila hoga
+            if(len(stack)==0):
+                ngr[i]=-1
+            else:
+                ngr[i]=stack[-1]
+            stack.append(nums2[i])
+        #now iterate through the nums2 array and store the indexes
+        for i in range(0,m):
+            hmap[nums2[i]]=i #here we store the element and the indexes
+        #now find the specific elements from nums1
+        ans=[]
+        for i in range(0,n):
+            ele=nums1[i]
+            val=hmap[ele]
+            ans.append(ngr[val])
+        return ans
+
+        
+
+
+
+        
             
         
         
